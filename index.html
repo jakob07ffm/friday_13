@@ -15,7 +15,7 @@
         h1 {
             color: #007bff;
         }
-        #result {
+        #result, #daysLeft, #totalDays {
             font-size: 1.2em;
             margin-top: 20px;
         }
@@ -25,33 +25,54 @@
     <h1>Next Friday the 13th</h1>
     <p>Here is the date of the next Friday the 13th:</p>
     <div id="result"></div>
+    <p id="totalDays"></p> 
 
     <script>
-        function findNextFriday13() {
-            const today = new Date();
-            let year = today.getFullYear();
-            let month = today.getMonth();
+        const today = new Date();
+        let year = today.getFullYear();
+        let month = today.getMonth();
 
+        function findNextFriday13() {
             while (true) {
-                for (month = 0; month < 12; month++) {
-                    let date = new Date(year, month, 13);
-                    if (date.getDay() === 5) { // 5 corresponds to Friday
-                        return date.toDateString();
+                for (let m = 0; m < 12; m++) {
+                    let date = new Date(year, m, 13);
+                    if (date.getDay() === 5) {
+                        return date; // Gibt das Date-Objekt zurück
                     }
                 }
                 year++;
             }
         }
-        document.getElementById('result').textContent = `${findNextFriday13()}`;
 
-        //daystillFriday13() {
-        //    while(to)
-        //}
+        // Finde das Date-Objekt für den nächsten Freitag, den 13.
+        const nextFriday13Date = findNextFriday13();
 
+        document.getElementById('result').textContent = `The next Friday the 13th is: ${nextFriday13Date.toDateString()}`;
+
+        function getDaysInMonth(year, month) {
+            return new Date(year, month + 1, 0).getDate(); // +1 und 0: 0 = letzter Tag des vorherigen Monats
+        }
+
+        // Berechne die Anzahl der Tage zwischen heute und dem nächsten Freitag, den 13.
+        function calculateDaysToNextFriday13() {
+            let totalDays = 0;
+            let currentDate = new Date(today);
+
+            while (currentDate <= nextFriday13Date) {
+                totalDays++;
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            const daysInMonth = getDaysInMonth(today.getFullYear(), today.getMonth());
+            const daysPassed = today.getDate();
+            const restDaysInMonth = daysInMonth - daysPassed;
+
+            document.getElementById('totalDays').textContent = `Total days from today to the next Friday the 13th: ${totalDays - 1}`;
+        }
+
+        calculateDaysToNextFriday13();
     </script>
     <h2>What's up with Friday the 13th?</h2>
     <iframe src="https://en.wikipedia.org/wiki/Friday_the_13th" width="1000" height="600" frameborder="0" allowfullscreen></iframe>
-
 </body>
 </html>
-
