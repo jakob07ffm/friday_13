@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Friday the 13th</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        #result {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Next Friday the 13th</h1>
+    <p>Here is the date of the next Friday the 13th:</p>
+    <div id="result"></div>
+
+    <script>
+        function findNextFriday13() {
+            const today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth();
+
+            while (true) {
+                for (month = 0; month < 12; month++) {
+                    let date = new Date(year, month, 13);
+                    if (date.getDay() === 5) { // 5 corresponds to Friday
+                        return date.toDateString();
+                    }
+                }
+                year++;
+            }
+        }
+        document.getElementById('result').textContent = `${findNextFriday13()}`;
+
+        //daystillFriday13() {
+        //    while(to)
+        //}
+
+    </script>
+    <h2>What's up with Friday the 13th?</h2>
+    <iframe src="https://en.wikipedia.org/wiki/Friday_the_13th" width="1000" height="600" frameborder="0" allowfullscreen></iframe>
+
+</body>
+</html>
 
