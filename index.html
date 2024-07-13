@@ -5,27 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Next Friday the 13th</title>
     <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('font.ttf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            text-align: center;
+            font-family: 'CustomFont', Arial, sans-serif;
+            background-color: #1F2833;
+            color: #45A29E;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-size: 64px;
+            text-transform: lowercase; /* Alle Texte in Kleinbuchstaben */
+        }
+        #main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            height: 100vh; 
+            text-align: right;
             padding: 50px;
         }
         h1 {
-            color: #007bff;
+            text-align: left;
+            color: #66FCF1;
         }
-        #result, #daysLeft, #totalDays {
+        #result, #totalDays {
             font-size: 1.2em;
             margin-top: 20px;
+        }
+        
+        #footer {
+            background-color: #0B0c10;
+            padding: 20px;
+            text-align: center;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        iframe {
+            width: 1000px; /* Feste Breite für das IFrame */
+            height: calc(100vh - 80px);
+            border: none; 
+        }
+        .iframe-container {
+            display: flex;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
-    <h1>Next Friday the 13th</h1>
-    <p>Here is the date of the next Friday the 13th:</p>
-    <div id="result"></div>
-    <p id="totalDays"></p> 
+    <div id="main-content">
+        <h1>Friday the 13th</h1>
+        <div id="result"></div>
+        <p id="totalDays"></p>
+    </div>
+
+    <div id="footer">
+        <h2>*What's up with Friday the 13th?</h2>
+        <div class="iframe-container">
+            <iframe src="https://en.wikipedia.org/wiki/Friday_the_13th" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
 
     <script>
         const today = new Date();
@@ -44,16 +90,13 @@
             }
         }
 
-        // Finde das Date-Objekt für den nächsten Freitag, den 13.
         const nextFriday13Date = findNextFriday13();
-
-        document.getElementById('result').textContent = `The next Friday the 13th is: ${nextFriday13Date.toDateString()}`;
+        document.getElementById('result').textContent = `the next friday the 13th is: ${nextFriday13Date.toDateString()}`;
 
         function getDaysInMonth(year, month) {
             return new Date(year, month + 1, 0).getDate(); // +1 und 0: 0 = letzter Tag des vorherigen Monats
         }
 
-        // Berechne die Anzahl der Tage zwischen heute und dem nächsten Freitag, den 13.
         function calculateDaysToNextFriday13() {
             let totalDays = 0;
             let currentDate = new Date(today);
@@ -63,16 +106,10 @@
                 currentDate.setDate(currentDate.getDate() + 1);
             }
 
-            const daysInMonth = getDaysInMonth(today.getFullYear(), today.getMonth());
-            const daysPassed = today.getDate();
-            const restDaysInMonth = daysInMonth - daysPassed;
-
-            document.getElementById('totalDays').textContent = `Total days from today to the next Friday the 13th: ${totalDays - 1}`;
+            document.getElementById('totalDays').textContent = `${totalDays - 1} days until the next friday the 13th`;
         }
 
         calculateDaysToNextFriday13();
     </script>
-    <h2>What's up with Friday the 13th?</h2>
-    <iframe src="https://en.wikipedia.org/wiki/Friday_the_13th" width="1000" height="600" frameborder="0" allowfullscreen></iframe>
 </body>
 </html>
